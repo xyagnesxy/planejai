@@ -44,7 +44,7 @@ export function SimulationResultsPage(){
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                     })}`}
-                    subtitle={'Prazo para atingir a meta'}
+                    subtitle={'Saldo mensal'}
                 />
             </div>
             <div className='grid gap-6 lg:grid-cols-3'>

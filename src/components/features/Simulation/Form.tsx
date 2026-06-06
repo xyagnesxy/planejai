@@ -1,4 +1,3 @@
-import { PiggyBank } from "lucide-react";
 import { FormStep } from "./FormStep";
 import { StepProgress } from "./Progress";
 import { useState } from "react";

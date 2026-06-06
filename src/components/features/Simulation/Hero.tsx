@@ -1,3 +1,4 @@
+import PiggyBankImage from '../../../assets/images/piggy-bank.png'
 export function SimulationHero(){
     return(
         <div className="mb-8 text-center">
@@ -6,7 +7,7 @@ export function SimulationHero(){
                 Vamos planejar seu futuro
                 </h1>
                 <img
-                src={'PiggyBankImage'}
+                src={PiggyBankImage}
                 alt=""
                 aria-hidden="true"
                 className="h-16 w-16 sm:-mt-2 sm:-ml-3"

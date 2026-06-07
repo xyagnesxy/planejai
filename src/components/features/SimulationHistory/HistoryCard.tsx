@@ -33,7 +33,7 @@ export function HistoryCard({simulationRecord}: HistoryCardProps) {
   
 
   return (
-      <div className="justify-between gap-8 rounded-[22px] p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] mb-3 flex flex-row items-center w-full h-auto">
+      <div className="justify-between gap-6 md:gap-8 rounded-[22px] p-6.5 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] mb-3 flex flex-col md:flex-row items-start md:items-center w-full h-auto bg-card">
         <div className='w-10 h-10 bg-[#ece5f8] flex items-center justify-center rounded-lg'>
             <Goal size={26.67} className='text-primary'/>
         </div>
@@ -50,7 +50,7 @@ export function HistoryCard({simulationRecord}: HistoryCardProps) {
             <div className="font-semibold text-[12px] text-muted-foreground">
                 CUSTO DA META
             </div>
-            <div className="font-semibold text-base text-foreground">
+            <div className="font-semibold text-base text-foreground ">
                 R$ {simulationRecord.goalAmount}
             </div> 
         </div>
@@ -70,14 +70,23 @@ export function HistoryCard({simulationRecord}: HistoryCardProps) {
                R$ {simulationRecord.income}
             </div> 
         </div>
-        <Divider orientation='vertical'/>
-        <div className='w-10 h-10 flex items-center justify-center rounded-lg'>
-            <Trash2Icon size={24} color='red'/>
+
+        <Divider orientation='horizontal' className='md:hidden'/>
+
+        <div className='flex flex-row items-center justify-between w-full md:w-auto h-8'>
+            <div className='w-26.25 md:w-auto h-auto flex items-center justify-center rounded-lg'>
+                <Trash2Icon size={24} color='red'/>
+            </div>
+            <Divider orientation='vertical'/>
+            <div className="w-32 md:w-auto h-auto">
+                <Button variant='secondary' className='w-auto h-auto flex flex-row font-normal text-[12px]'>
+                    <ExternalLink size={16}/>
+                    Ver detalhes
+                </Button>
+
+            </div>
+
         </div>
-        <Button variant='secondary' className='w-auto h-auto flex flex-row font-normal text-[12px]'>
-            <ExternalLink size={16}/>
-            Ver detalhes
-        </Button>
 
         
       </div>

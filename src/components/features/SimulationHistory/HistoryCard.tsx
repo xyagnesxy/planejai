@@ -42,7 +42,7 @@ export function HistoryCard({simulationRecord}: HistoryCardProps) {
                 {simulationRecord.goalName}
             </div>
             <div className='text-sm font-normal text-muted-foreground'>
-                xx/xx/xx
+                {new Date(simulationRecord.createdAt).toLocaleDateString('pt-BR')}
             </div> 
 
         </div>

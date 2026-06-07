@@ -79,4 +79,5 @@ export type SimulationFormData = Record<
 export type SimulationRecord = SimulationFormData & {
     id: string
     insight?: InsightData
+    createdAt: string
 }

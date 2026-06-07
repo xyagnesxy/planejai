@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import { SimulationFormPage } from "./pages/SimulationFormPage";
 import { RootLayout } from "./components/layout/RootLayout";
 import { SimulationResultsPage } from "./pages/SimulationResultsPage";
+import { SimulationHistoryPage } from "./pages/SimulationHistoryPage";
 
 export const router = createBrowserRouter([
     {
@@ -18,7 +19,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:"/historico",
-                element:<h1>sdaas</h1>,
+                element:<SimulationHistoryPage/>,
             },
 
         ]

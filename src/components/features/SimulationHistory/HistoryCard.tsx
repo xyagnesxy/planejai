@@ -2,6 +2,7 @@ import { ExternalLink, Goal, Trash2Icon } from 'lucide-react'
 import type { SimulationRecord } from '../../../data/simulation'
 import { Divider } from '../../shared/Divider'
 import { Button } from '../../shared/Button'
+import { useNavigate } from 'react-router-dom'
 
 interface HistoryCardProps{
   simulationRecord: SimulationRecord
@@ -9,7 +10,7 @@ interface HistoryCardProps{
 }
 
 export function HistoryCard({simulationRecord, handleDelete}: HistoryCardProps) {
-  
+    const navigate = useNavigate()
 
   return (
       <div className="justify-between gap-6 md:gap-8 rounded-[22px] p-6.5 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] mb-3 flex flex-col md:flex-row items-start md:items-center w-full h-auto bg-card">
@@ -60,7 +61,9 @@ export function HistoryCard({simulationRecord, handleDelete}: HistoryCardProps) 
             </div>
             <Divider orientation='vertical'/>
             <div className="w-32 md:w-auto h-auto">
-                <Button variant='secondary' className='w-auto h-auto flex flex-row font-normal text-[12px]'>
+                <Button variant='secondary' className='w-auto h-auto flex flex-row font-normal text-[12px]'
+                    onClick={()=>navigate(`/resultado/${simulationRecord.id}`)}
+                >
                     <ExternalLink size={16}/>
                     Ver detalhes
                 </Button>

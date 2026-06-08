@@ -5,9 +5,10 @@ import { Button } from '../../shared/Button'
 
 interface HistoryCardProps{
   simulationRecord: SimulationRecord
+  handleDelete: (id: string)=>void
 }
 
-export function HistoryCard({simulationRecord}: HistoryCardProps) {
+export function HistoryCard({simulationRecord, handleDelete}: HistoryCardProps) {
   
 
   return (
@@ -52,8 +53,10 @@ export function HistoryCard({simulationRecord}: HistoryCardProps) {
         <Divider orientation='horizontal' className='md:hidden'/>
 
         <div className='flex flex-row items-center justify-between w-full md:w-auto h-8'>
-            <div className='w-26.25 md:w-auto h-auto flex items-center justify-center rounded-lg'>
+            <div className='w-26.25 md:w-auto h-auto flex items-center justify-center rounded-lg cursor-pointer'
+                onClick={()=>handleDelete(simulationRecord.id)}>
                 <Trash2Icon size={24} color='red'/>
+                
             </div>
             <Divider orientation='vertical'/>
             <div className="w-32 md:w-auto h-auto">

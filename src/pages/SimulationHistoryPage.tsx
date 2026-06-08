@@ -1,13 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { HistoryCard } from "../components/features/SimulationHistory/HistoryCard";
 import { PageHero } from "../components/shared/PageHero";
 import { useSimulationStorage } from "../hooks/useSimulationStorage";
+import type { SimulationRecord } from "../data/simulation";
 
 export function SimulationHistoryPage(){
-    const {getFormData, getHistory} = useSimulationStorage()
+    const {getFormData, getHistory, deleteSimulation} = useSimulationStorage()
     
     
-    const historico = getHistory()
+    const [historico, setHistorico] = useState<SimulationRecord[] | null>(getHistory())
+    const handleDelete = (id:string)=>{
+        deleteSimulation(id)
+        setHistorico(getHistory())
+    }
     if(!historico){
         return <p>Nenhuma simulação encontrada</p>
     }
@@ -19,7 +24,7 @@ export function SimulationHistoryPage(){
             
             {historico.map(i=>{
                 return(
-                    <HistoryCard key={i.id} simulationRecord={i}/>
+                    <HistoryCard key={i.id} simulationRecord={i} handleDelete={handleDelete}/>
                 )
                 
             })}

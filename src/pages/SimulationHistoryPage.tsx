@@ -14,7 +14,7 @@ export function SimulationHistoryPage(){
         
     
     return(
-        <div className="flex flex-col max-w-360 h-auto gap-6 py-10 px-25">
+        <div className="flex flex-col max-w-6xl h-auto gap-6 py-10 px-25">
             <PageHero title="Histórico de simulações" subtitle="Acompanhe o histórico de seus planos financeiros"/>
             
             {historico.map(i=>{

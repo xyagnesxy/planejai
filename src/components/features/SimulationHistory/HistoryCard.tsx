@@ -1,30 +1,8 @@
-import { ExternalLink, Goal, Trash2Icon, TrashIcon, type LucideIcon } from 'lucide-react'
+import { ExternalLink, Goal, Trash2Icon } from 'lucide-react'
 import type { SimulationRecord } from '../../../data/simulation'
 import { Divider } from '../../shared/Divider'
 import { Button } from '../../shared/Button'
 
-interface CardProps {
-  icon: LucideIcon
-  label: string
-  value: string
-  subtitle: string
-  variant?: 'default' | 'primary'
-}
-
-const variantClasses = {
-  default: {
-    card: 'bg-card',
-    accent: 'text-primary',
-    value: 'text-foreground',
-    subtitle: 'text-muted-foreground',
-  },
-  primary: {
-    card: 'bg-primary',
-    accent: 'text-primary-foreground',
-    value: 'text-primary-foreground',
-    subtitle: 'text-primary-foreground/70',
-  },
-}
 interface HistoryCardProps{
   simulationRecord: SimulationRecord
 }

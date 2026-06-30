@@ -19,7 +19,15 @@ interface AiInsightCardProps{
 export function AiInsightCard({simulationId}: AiInsightCardProps){
     const {insight, error, isLoading, fetchInsight, getTalkHistory, talkToGemini, history, setHistory} = useInsight(simulationId)
     const {id} = useParams()
-    
+    const [userInput, setUserInput] = useState('')
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault()
+        if(!userInput.trim()){
+            return
+        }
+        conversa()
+        setUserInput('')
+    }
     async function conversa(){
         const input = document.getElementById('input') as HTMLInputElement
         const valor = input.value
@@ -54,17 +62,24 @@ export function AiInsightCard({simulationId}: AiInsightCardProps){
             
             
 
-            <div className="flex items-center w-full h-auto justify-between gap-2.5">
-                <input id="input" type="text" className="bg-input w-173.75 h-13.5 rounded-2xl shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)]"
+            <form
+            onSubmit={handleSubmit}
+            className="flex items-center w-full h-auto justify-between gap-2.5">
+                <input
+                id="input"
+                type="text"
+                value={userInput}
+                onChange={(e)=>setUserInput(e.target.value)}
+                className="bg-input w-173.75 h-13.5 rounded-2xl shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)]"
                     
                 />
-                <div id="botao" className='w-15 h-15 rounded-2xl bg-primary flex items-center justify-center'
-                    onClick={conversa}
+                <button type="submit" id="botao" className='w-15 h-15 rounded-2xl bg-primary flex items-center justify-center'
+                    disabled={isLoading}
                 >
                     <Send size={26.67} className='text-primary-foreground'/>
-                </div>
+                </button>
 
-            </div>
+            </form>
         </div>
     )
 

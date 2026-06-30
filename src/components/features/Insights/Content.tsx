@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react"
+import { useEffect, useRef, type PropsWithChildren } from "react"
 import type { InsightData } from "../../../services/aiService"
 import type { Historico } from "../../../data/simulation"
 import { Divider } from "../../shared/Divider"
@@ -52,7 +52,10 @@ const statusStyles = {
 
 export function Content({insight, history }: ContentProps) {
   const status = statusStyles[insight.feasibility.status] ?? null
-
+  const fimDoChatRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    fimDoChatRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [history]);
   return (
     <div className="lg:scrollbar-thin lg:max-h-93 lg:overflow-y-auto lg:pr-2 lg:[scrollbar-color:var(--border)_transparent]">
       <div>model: </div>
@@ -113,6 +116,7 @@ export function Content({insight, history }: ContentProps) {
             )
           })
         }
+        <div ref={fimDoChatRef}></div>
     </div>
   )
 }

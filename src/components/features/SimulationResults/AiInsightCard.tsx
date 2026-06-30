@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton"
 import { Divider } from "../../shared/Divider"
 import { MessageCircleReplyIcon, Send } from "lucide-react"
 import { callGeminiAPI, continueTalkToGeminiAPI, getInsight, getResponse, HISTORICO_INICIAL } from "../../../services/aiService"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { Historico, SimulationRecord } from "../../../data/simulation"
 import { useParams } from "react-router-dom"
 import { useSimulationStorage } from "../../../hooks/useSimulationStorage"
@@ -20,6 +20,7 @@ export function AiInsightCard({simulationId}: AiInsightCardProps){
     const {insight, error, isLoading, fetchInsight, getTalkHistory, talkToGemini, history, setHistory} = useInsight(simulationId)
     const {id} = useParams()
     const [userInput, setUserInput] = useState('')
+    
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         if(!userInput.trim()){
@@ -28,6 +29,7 @@ export function AiInsightCard({simulationId}: AiInsightCardProps){
         conversa()
         setUserInput('')
     }
+
     async function conversa(){
         const input = document.getElementById('input') as HTMLInputElement
         const valor = input.value

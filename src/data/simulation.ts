@@ -71,13 +71,17 @@ export const simulationFormSteps = [
         }
     },
 ] satisfies FormStepProps[]
-
+export type Historico = {
+  role: 'user' | 'model';
+  parts: { text: string }[];
+}[]
 export type SimulationFormData = Record<
     (typeof simulationFormSteps)[number]['id'],
     string
 >
-export type SimulationRecord = SimulationFormData & {
+export type SimulationRecord = Omit<SimulationFormData, 'history'> & {
     id: string
     insight?: InsightData
     createdAt: string
+    history: Historico
 }

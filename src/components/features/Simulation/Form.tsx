@@ -14,15 +14,20 @@ export function SimulationForm(){
     const [formData, setFormData] = useState<SimulationFormData>(
         {} as SimulationFormData
     )
+    
     const handleNextStep = (value: string) => {
         const updatedFormData = {
             ...formData,
             [currentStep.id]: value
         }
+        console.log("setando formData")
         setFormData(updatedFormData)
         if(currentStepIndex+1>totalSteps-1){
+            console.log("salvando formData")
             saveFormData(updatedFormData)
             const id = saveFormData(updatedFormData)
+            
+            console.log("navegando pra o resuldato/id")
             void navigate(`/resultado/${id}`)
             return
         }

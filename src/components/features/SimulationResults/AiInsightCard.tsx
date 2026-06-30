@@ -1,0 +1,71 @@
+import { useInsight } from "../../../hooks/useInsight"
+import { Error } from "../Insights/Error"
+import { Content } from "../Insights/Content"
+import Skeleton from "react-loading-skeleton"
+import { Divider } from "../../shared/Divider"
+import { MessageCircleReplyIcon, Send } from "lucide-react"
+import { callGeminiAPI, continueTalkToGeminiAPI, getInsight, getResponse, HISTORICO_INICIAL } from "../../../services/aiService"
+import { useEffect, useState } from "react"
+import type { Historico, SimulationRecord } from "../../../data/simulation"
+import { useParams } from "react-router-dom"
+import { useSimulationStorage } from "../../../hooks/useSimulationStorage"
+
+//import { get } from "http"
+
+interface AiInsightCardProps{
+    simulationId: string
+}
+
+export function AiInsightCard({simulationId}: AiInsightCardProps){
+    const {insight, error, isLoading, fetchInsight, getTalkHistory, talkToGemini, history, setHistory} = useInsight(simulationId)
+    const {id} = useParams()
+    
+    async function conversa(){
+        const input = document.getElementById('input') as HTMLInputElement
+        const valor = input.value
+        try{
+            console.log("chamando useInsight talktoGemini com: ", valor)
+            const response = await talkToGemini(valor)
+            console.log("respsta do genino: ", response)
+        }
+        catch(e){
+            console.log("deu erro: ", e)
+        }
+    }
+    return(
+        <div className="bg-card order-2 rounded-2xl p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] lg:order-1 lg:col-span-2">
+            <div className="mb-3 flex items-center gap-1.5">
+                <span>✨</span>
+                <span className="text-primary text-xs font-semibold tracking-widest uppercase">
+                    Insight Financeiro Personalizado
+                </span>
+            </div>
+
+            {isLoading && <Skeleton
+                count={10.5}
+                baseColor="var(--color-skeleton-base)"
+                highlightColor="var(--color-skeleton-highlight)"
+                className="mb-3 flex rounded-lg"
+                containerClassName="flex-1"
+                inline
+            />}
+            {!isLoading && error && <Error simulationId={simulationId} message={error} onRetry={()=>console.log("deu retry")} />}
+            {!isLoading && insight && !error && <Content history={history} insight={insight} />}
+            
+            
+
+            <div className="flex items-center w-full h-auto justify-between gap-2.5">
+                <input id="input" type="text" className="bg-input w-173.75 h-13.5 rounded-2xl shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)]"
+                    
+                />
+                <div id="botao" className='w-15 h-15 rounded-2xl bg-primary flex items-center justify-center'
+                    onClick={conversa}
+                >
+                    <Send size={26.67} className='text-primary-foreground'/>
+                </div>
+
+            </div>
+        </div>
+    )
+
+}

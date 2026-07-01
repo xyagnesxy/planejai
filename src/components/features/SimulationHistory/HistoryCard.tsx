@@ -60,8 +60,8 @@ export function HistoryCard({simulationRecord, handleDelete}: HistoryCardProps) 
                 
             </div>
             <Divider orientation='vertical'/>
-            <div className="w-32 md:w-auto h-auto">
-                <Button variant='secondary' className='w-auto h-auto flex flex-row font-normal text-[12px]'
+            <div className="w-auto py-2 px-4 md:w-auto h-auto">
+                <Button variant='secondary' className='w-auto h-auto flex flex-row p-2 font-normal text-[12px]'
                     onClick={()=>navigate(`/resultado/${simulationRecord.id}`)}
                 >
                     <ExternalLink size={16}/>

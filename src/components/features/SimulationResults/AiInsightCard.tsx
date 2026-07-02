@@ -3,12 +3,13 @@ import { Error } from "../Insights/Error"
 import { Content } from "../Insights/Content"
 import Skeleton from "react-loading-skeleton"
 import { Divider } from "../../shared/Divider"
-import { MessageCircleReplyIcon, Send } from "lucide-react"
+import { MessageCircleReplyIcon, RefreshCw, Send } from "lucide-react"
 import { callGeminiAPI, continueTalkToGeminiAPI, getInsight, getResponse, HISTORICO_INICIAL } from "../../../services/aiService"
 import { useEffect, useRef, useState } from "react"
 import type { Historico, SimulationRecord } from "../../../data/simulation"
 import { useParams } from "react-router-dom"
 import { useSimulationStorage } from "../../../hooks/useSimulationStorage"
+import { Button } from "../../shared/Button"
 
 //import { get } from "http"
 
@@ -17,7 +18,7 @@ interface AiInsightCardProps{
 }
 
 export function AiInsightCard({simulationId}: AiInsightCardProps){
-    const {insight, error, isLoading, fetchInsight, getTalkHistory, talkToGemini, history, setHistory} = useInsight(simulationId)
+    const {insight, error, chatError, retryLastMesage, isLoading, fetchInsight, getTalkHistory, talkToGemini, history, setHistory} = useInsight(simulationId)
     const {id} = useParams()
     const [userInput, setUserInput] = useState('')
     
@@ -52,8 +53,20 @@ export function AiInsightCard({simulationId}: AiInsightCardProps){
                 </span>
             </div>
 
-            {!isLoading && error && <Error simulationId={simulationId} message={error} onRetry={()=>console.log("deu retry")} />}
+            {!isLoading && error && <Error simulationId={simulationId} message={error} onRetry={()=>fetchInsight(simulationId)} />}
             {insight && !error && <Content history={history} insight={insight} isLoading={isLoading}/>}
+            {!isLoading && chatError && 
+            <div className="flex h-auto flex-col items-center justify-center gap-3 p-6">
+                <p className="text-sm text-red-500"> ⚠️ {chatError}</p>
+                <Button
+                variant="primary"
+                className="px-6"
+                icon={RefreshCw}
+                onClick={retryLastMesage}
+                >
+                Tentar novamente
+                </Button>
+            </div>}
             
             
 

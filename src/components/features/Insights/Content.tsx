@@ -54,7 +54,7 @@ const statusStyles = {
   },
 }
 
-export function Content({insight, history, isLoading }: ContentProps) {
+export function Content({insight, history, isLoading}: ContentProps) {
   const status = statusStyles[insight.feasibility.status] ?? null
   const fimDoChatRef = useRef<HTMLDivElement>(null);
   useEffect(() => {

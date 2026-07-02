@@ -8,6 +8,7 @@ export const useInsight = (id: string)=>{
     const isRequestPending = useRef(false)
     const {getFormData, updateSimulation, updateTalkHistory, getTalkHistory} = useSimulationStorage()
     const [history, setHistory] = useState<Historico>(getTalkHistory(id))
+    const [userLastMesage, setUserLastMesage] = useState('')
     const [insight, setInsight] = useState<InsightData | null>(()=>{
         const simulation = getFormData(id)
         if(simulation?.insight){
@@ -16,6 +17,7 @@ export const useInsight = (id: string)=>{
         return null
     })
     const [error, setError] = useState<string | null>()
+    const [chatError, setChatError] = useState<string | null>()
     const [isLoading, setIsLoading] = useState(false)
     const fetchInsight = useCallback(
         //posso tirar o array de dependências?
@@ -49,7 +51,9 @@ export const useInsight = (id: string)=>{
     )
     const talkToGemini = async (input: string)=>{
         try{
+            setUserLastMesage(input)
             setError(null)
+            setChatError(null)
             setIsLoading(true)
             //seta novo histórico localmente com a entrada do usuário
             const newHistory = [...history, {
@@ -65,14 +69,20 @@ export const useInsight = (id: string)=>{
                 parts: [{text: geminiResponse}]
             }])
             updateTalkHistory(id, history)
+            setUserLastMesage('')
             return geminiResponse
         }catch(e){
-            setError('Erro ao gerar resposta. Tente novamente.')
-
+            setChatError('Erro ao gerar resposta. Tente novamente.')
             console.log("erro: ", e)
         }finally{
             setIsLoading(false)
         }
+    }
+    const retryLastMesage = async()=>{
+        if(!userLastMesage){
+            return
+        }
+        talkToGemini(userLastMesage)
     }
 
     useEffect(()=>{
@@ -83,5 +93,5 @@ export const useInsight = (id: string)=>{
         fetchInsight(id)
     }, [id, insight, isLoading, error, fetchInsight, getTalkHistory])
 
-    return {insight, error, isLoading, setIsLoading, fetchInsight, talkToGemini, getTalkHistory, history, setHistory}
+    return {insight, error, chatError, setChatError, isLoading, setIsLoading, fetchInsight, talkToGemini, getTalkHistory, history, setHistory, retryLastMesage}
 }

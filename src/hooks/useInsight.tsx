@@ -33,13 +33,18 @@ export const useInsight = (id: string)=>{
             try{
                 const prompt = buildAIPrompt(simulation)
                 const data = await getInsight(prompt)
-                //setInsight(data)
+                const initialHistory: Historico =  [{
+                    role: 'model',
+                    parts: [{text: JSON.stringify(data)}]
+                    
+                }]
                 updateSimulation(simulationId, {
                     ...simulation,
                     insight: data
                 } as SimulationRecord)
-                updateTalkHistory(simulationId, history)
-                setHistory(getTalkHistory(simulationId))
+                updateTalkHistory(simulationId, initialHistory)
+                setHistory(initialHistory)
+                setInsight(data)
                 setError(null)
             }catch{
                 setError('Erro ao gerar o diagnóstico. Tente novamente.')
@@ -47,7 +52,7 @@ export const useInsight = (id: string)=>{
                 isRequestPending.current = false
                 setIsLoading(false)
             }
-        }, [getFormData, updateSimulation]
+        }, []
     )
     const talkToGemini = async (input: string)=>{
         try{
@@ -64,10 +69,11 @@ export const useInsight = (id: string)=>{
             //chama o gemini com o novo histórico
             const geminiResponse = await getResponse(newHistory)
             //seta novo histórico localmente, agora com a resposta do gemini
-            setHistory([...newHistory, {
+            const finalHistory: Historico = [...newHistory, {
                 role: 'model',
                 parts: [{text: geminiResponse}]
-            }])
+            }]
+            setHistory(finalHistory)
             updateTalkHistory(id, history)
             setUserLastMesage('')
             return geminiResponse

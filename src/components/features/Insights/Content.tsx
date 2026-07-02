@@ -61,7 +61,7 @@ export function Content({insight, history, isLoading }: ContentProps) {
     fimDoChatRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [history]);
   return (
-    <div className="lg:scrollbar-thin lg:max-h-93 lg:overflow-y-auto lg:pr-2 lg:[scrollbar-color:var(--border)_transparent]">
+    <div className=" max-h-93 overflow-y-auto [scrollbar-color:var(--border)_transparent] lg:scrollbar-thin lg:max-h-93 lg:overflow-y-auto lg:pr-2 lg:[scrollbar-color:var(--border)_transparent]">
       <section className="flex flex-col gap-2">
         <div className="flex flex-col items-start gap-2 sm:flex-row">
           <span className="text-foreground text-base font-bold">

@@ -20,6 +20,7 @@ export const useInsight = (id: string)=>{
     const fetchInsight = useCallback(
         //posso tirar o array de dependências?
         async (simulationId: string)=>{
+
             const simulation = getFormData(simulationId)
             if(!simulation){
                 setError('Simulação não encontrada')
@@ -27,7 +28,6 @@ export const useInsight = (id: string)=>{
             }
             isRequestPending.current = true
             setIsLoading(true)
-            setError(null)
             try{
                 const prompt = buildAIPrompt(simulation)
                 const data = await getInsight(prompt)
@@ -38,6 +38,7 @@ export const useInsight = (id: string)=>{
                 } as SimulationRecord)
                 updateTalkHistory(simulationId, history)
                 setHistory(getTalkHistory(simulationId))
+                setError(null)
             }catch{
                 setError('Erro ao gerar o diagnóstico. Tente novamente.')
             }finally{
@@ -48,6 +49,8 @@ export const useInsight = (id: string)=>{
     )
     const talkToGemini = async (input: string)=>{
         try{
+            setError(null)
+            setIsLoading(true)
             //seta novo histórico localmente com a entrada do usuário
             const newHistory = [...history, {
                 role: 'user',
@@ -65,7 +68,10 @@ export const useInsight = (id: string)=>{
             return geminiResponse
         }catch(e){
             setError('Erro ao gerar resposta. Tente novamente.')
+
             console.log("erro: ", e)
+        }finally{
+            setIsLoading(false)
         }
     }
 
@@ -77,5 +83,5 @@ export const useInsight = (id: string)=>{
         fetchInsight(id)
     }, [id, insight, isLoading, error, fetchInsight, getTalkHistory])
 
-    return {insight, error, isLoading, fetchInsight, talkToGemini, getTalkHistory, history, setHistory}
+    return {insight, error, isLoading, setIsLoading, fetchInsight, talkToGemini, getTalkHistory, history, setHistory}
 }

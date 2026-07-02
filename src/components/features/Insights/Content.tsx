@@ -5,10 +5,12 @@ import { Divider } from "../../shared/Divider"
 import { LucideMessageCircle } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import { MarkdownRenderer } from "./MarkdownRenderer"
+import Skeleton from "react-loading-skeleton"
 
 interface ContentProps{
     insight: InsightData
     history: Historico
+    isLoading?: boolean
 }
 
 function Paragraph({ children }: PropsWithChildren) {
@@ -52,7 +54,7 @@ const statusStyles = {
   },
 }
 
-export function Content({insight, history }: ContentProps) {
+export function Content({insight, history, isLoading }: ContentProps) {
   const status = statusStyles[insight.feasibility.status] ?? null
   const fimDoChatRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -109,13 +111,14 @@ export function Content({insight, history }: ContentProps) {
               <div key={index} className='w-full h-auto gap-2.5 flex flex-col'>
                 {
                   i.role==='model'?
-                  <div className='whitespace-pre-line gap-2.5 flex flex-col'>
-                    <p className='text-muted-foreground text-base font-semibold flex flex-row  gap-2'>
-                      <LucideMessageCircle/>
-                      Resposta da IA
-                    </p>
-                    <MarkdownRenderer markdownContent={i.parts[0]?.text || 'vazio'} />
-                  </div>:
+                    <div className='whitespace-pre-line gap-2.5 flex flex-col'>
+                      <p className='text-muted-foreground text-base font-semibold flex flex-row  gap-2'>
+                        <LucideMessageCircle/>
+                        Resposta da IA
+                      </p>
+                      <MarkdownRenderer markdownContent={i.parts[0]?.text || 'vazio'} />
+                    </div>
+                  :
                   <>
                     <p className='text-muted-foreground text-base font-semibold flex flex-row  gap-2'>
                       <LucideMessageCircle/>
@@ -130,6 +133,16 @@ export function Content({insight, history }: ContentProps) {
             )
           })
         }
+        {
+          isLoading &&  <Skeleton
+          count={5.5}
+          baseColor="var(--color-skeleton-base)"
+          highlightColor="var(--color-skeleton-highlight)"
+          className="mb-3  rounded-lg"
+          containerClassName="flex-1"
+          inline
+          />
+        }  
         <div ref={fimDoChatRef}></div>
     </div>
   )

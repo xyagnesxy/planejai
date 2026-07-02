@@ -75,10 +75,8 @@ export const getInsight = async (prompt: string) => {
   return JSON.parse(json) as InsightData
 }
 export const getResponse = async (prompt: Historico) => {
-  console.log("propt que é enviado: ", prompt)
+  
   const response = await continueTalkToGeminiAPI(prompt)
-  console.log("response que chega: ", response)
   const json = response.candidates[0].content.parts[0].text
-  console.log("json que chega: ", json)
   return json
 }

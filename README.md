@@ -12,6 +12,10 @@ Tudo funciona diretamente no navegador: sem backend, sem banco de dados remoto. 
 ### Conversa com o educador a partir do insight por ele gerado
 ![alt text](image-1.png)
 
+### Aprendizados
+- O básico de comunicação de aplicação web com api de modelo de IA
+- O básico de roteamento de páginas em React
+- Reforço no uso de contextApi
 
 
 

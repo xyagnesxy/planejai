@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   type Historico,
   type SimulationFormData,

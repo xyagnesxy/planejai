@@ -3,7 +3,6 @@ import type { InsightData } from "../../../services/aiService"
 import type { Historico } from "../../../data/simulation"
 import { Divider } from "../../shared/Divider"
 import { LucideMessageCircle } from "lucide-react"
-import ReactMarkdown from "react-markdown"
 import { MarkdownRenderer } from "./MarkdownRenderer"
 import Skeleton from "react-loading-skeleton"
 

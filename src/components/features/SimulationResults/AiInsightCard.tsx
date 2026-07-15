@@ -1,25 +1,17 @@
 import { useInsight } from "../../../hooks/useInsight"
 import { Error } from "../Insights/Error"
 import { Content } from "../Insights/Content"
-import Skeleton from "react-loading-skeleton"
-import { Divider } from "../../shared/Divider"
-import { MessageCircleReplyIcon, RefreshCw, Send } from "lucide-react"
-import { callGeminiAPI, continueTalkToGeminiAPI, getInsight, getResponse, HISTORICO_INICIAL } from "../../../services/aiService"
-import { useEffect, useRef, useState } from "react"
-import type { Historico, SimulationRecord } from "../../../data/simulation"
-import { useParams } from "react-router-dom"
-import { useSimulationStorage } from "../../../hooks/useSimulationStorage"
+import { RefreshCw, Send } from "lucide-react"
+import { useEffect, useState } from "react"
 import { Button } from "../../shared/Button"
-
-//import { get } from "http"
+import Skeleton from "react-loading-skeleton"
 
 interface AiInsightCardProps{
     simulationId: string
 }
 
 export function AiInsightCard({simulationId}: AiInsightCardProps){
-    const {insight, error, chatError, retryLastMesage, isLoading, fetchInsight, getTalkHistory, talkToGemini, history, setHistory} = useInsight(simulationId)
-    const {id} = useParams()
+    const {insight, error, chatError, retryLastMesage, isLoading, fetchInsight, talkToGemini, history, } = useInsight(simulationId)
     const [userInput, setUserInput] = useState('')
     
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
@@ -67,6 +59,16 @@ export function AiInsightCard({simulationId}: AiInsightCardProps){
                 Tentar novamente
                 </Button>
             </div>}
+            {
+                isLoading && !error && <Skeleton
+                    count={5.5}
+                    baseColor="var(--color-skeleton-base)"
+                    highlightColor="var(--color-skeleton-highlight)"
+                    className="mb-3  rounded-lg"
+                    containerClassName="flex-1"
+                    inline
+                />
+            }
             
             
 
